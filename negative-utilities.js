@@ -93,24 +93,3 @@ exports.performAnalysis = (amount, splitInfoArray, next) => {
             };
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

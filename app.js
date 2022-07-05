@@ -14,11 +14,11 @@ app.use(compression());
 app.use(express.json());
 
 app.post('/split-payments/compute', async (request, response, next) => {
-    let { balance } = utils.performAnalysis(request.body.Amount, request.body.SplitInfo, next);
+    let { balance, mySplitBreakDown } = utils.performAnalysis(request.body.Amount, request.body.SplitInfo, next);
     return response.status(200).json({
             "ID": request.body.ID,
             "Balance": balance,
-            // "SplitBreakdown": splitBreakdown
+            "SplitBreakdown": mySplitBreakDown
         });
 });
 
@@ -38,31 +38,3 @@ app.use((error, request, response, next) => {
 
 
 module.exports  = app;
-
-
-
-
-
-// response.status(200).json({
-//     status: 200,
-//     data: {
-//         output: {
-//             "ID": 1308,
-//             "Balance": 0,
-//             "SplitBreakdown": [
-//                 {
-//                     "SplitEntityId": "LNPYACC0019",
-//                     "Amount": 5000
-//                 },
-//                 {
-//                     "SplitEntityId": "LNPYACC0011",
-//                     "Amount": 2000
-//                 },
-//                 {
-//                     "SplitEntityId": "LNPYACC0015",
-//                     "Amount": 2000
-//                 }
-//             ]
-//         }
-//     }
-// });

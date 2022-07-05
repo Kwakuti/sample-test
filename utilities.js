@@ -76,19 +76,23 @@ function analyseRatioHelper(amount, ratioArray, ratioSum) {
 
 exports.performAnalysis = (amount, splitInfoArray, next) => {
     let { flatArray, percentageArray, ratioArray, ratioSum } = helperFunction(splitInfoArray);
-    
+
     let currentAmount = amount - analyseFlatHelper(flatArray);
+
     if(currentAmount <= 0) return next({ message: 'Error found ', status: 404 });
 
     currentAmount = analysePercentageHelper(currentAmount, percentageArray);
+
     if(currentAmount <= 0) return next({ message: 'Error found ', status: 404 });
     
     balance = analyseRatioHelper(currentAmount, ratioArray, ratioSum);
-    if(balance <= 0) return next({ message: 'Error found ', status: 404 });
-    return { "Balance": balance, "SplitBreakDown" : mySplitBreakDown };
-}
+    
+    if(balance < 0) {
+        return next({ message: 'Error found ', status: 404 })
+    };
 
-//ENSURE amount IS POSITIVE
+    return { balance, mySplitBreakDown };
+}
 
 
 

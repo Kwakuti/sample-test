@@ -96,9 +96,10 @@ exports.performAnalysis = (amount, splitInfoArray, next) => {
         return next({ message: 'Error found ', status: 404 })
     };
 
-    console.log(mySplitBreakDown);
+    let sendToFront = mySplitBreakDown;
+    mySplitBreakDown = [];
     return {  
                 balance: balance,
-                mySplitBreakDown: mySplitBreakDown
+                mySplitBreakDown: sendToFront
             };
 }

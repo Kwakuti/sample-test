@@ -2,8 +2,8 @@ const morgan = require('morgan');
 const express = require('express');
 const compression = require('compression');
 
-const utils = require('./utilities');
-// const utils = require('./negative-utilities');
+// const utils = require('./utilities');
+const utils = require('./negative-utilities');
 
 const app = express();
 

@@ -1,3 +1,5 @@
+let mySplitBreakDown = [];
+
 function helperFunction(arrayInput) {
     let ratioSum, flatArray, ratioArray, percentageArray;
     
@@ -38,7 +40,9 @@ function analyseFlatHelper(flatArray) {
     function analyseFlat(flatArr) {
         if(flatArr.length <= 0) return;
         flatSum = flatSum + flatArr[flatArr.length-1].SplitValue;
-        flatArr.pop();
+        let removedElement = flatArr.pop();
+        //initial mySplitBreakDown.push({"SplitEntityId": removedElement.SplitEntityId,"Amount": removedElement.SplitValue});
+        mySplitBreakDown.push({"SplitEntityId": removedElement.SplitEntityId,"Amount": removedElement.SplitValue });
         return analyseFlat(flatArr);
     }
     analyseFlat(flatArray);
@@ -49,8 +53,10 @@ function analysePercentageHelper(amount, percentageArray) {
     let evaluatedAmount = amount;
     function analysePercentage(percentageArr) {
         if(percentageArr.length <= 0) return;
-        evaluatedAmount = evaluatedAmount - (percentageArr[percentageArr.length-1].SplitValue * 0.01 * evaluatedAmount);
-        percentageArr.pop()
+        let calculation = (percentageArr[percentageArr.length-1].SplitValue * 0.01 * evaluatedAmount)
+        evaluatedAmount = evaluatedAmount - calculation;
+        let removedElement = percentageArr.pop();
+        mySplitBreakDown.push({"SplitEntityId": removedElement.SplitEntityId,"Amount": calculation });
         return analysePercentage(percentageArr);
     }
     analysePercentage(percentageArray);
@@ -62,8 +68,10 @@ function analyseRatioHelper(amount, ratioArray, ratioSum) {
     let evaluatedAmount = amount;
     function analyseRatio(ratioArr) {
         if(ratioArr.length <= 0) return;
-        evaluatedAmount = evaluatedAmount - ((ratioArr[ratioArr.length-1].SplitValue/ratioSum) * evaluatedAmount);
-        ratioArr.pop();
+        let calculation = ((ratioArr[ratioArr.length-1].SplitValue/ratioSum) * evaluatedAmount);
+        evaluatedAmount = evaluatedAmount - calculation;
+        let removedElement = ratioArr.pop();
+        mySplitBreakDown.push({"SplitEntityId": removedElement.SplitEntityId,"Amount": calculation });
         return analyseRatio(ratioArr);
     }
     analyseRatio(ratioArray);
@@ -88,8 +96,9 @@ exports.performAnalysis = (amount, splitInfoArray, next) => {
         return next({ message: 'Error found ', status: 404 })
     };
 
+    console.log(mySplitBreakDown);
     return {  
-                balance: balance
+                balance: balance,
+                mySplitBreakDown: mySplitBreakDown
             };
-
 }

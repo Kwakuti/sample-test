@@ -90,6 +90,7 @@ exports.performAnalysis = (amount, splitInfoArray, next) => {
     if(balance < 0) {
         return next({ message: 'Error found ', status: 404 })
     };
+    console.log(mySplitBreakDown);
 
     return { balance, mySplitBreakDown };
 }

@@ -8,6 +8,7 @@ dotenv.config({
 
 
 const PORT_NUM = process.env.PORT || 3000;
+console.log(process.env.PORT)
 
 const serverObject = server.listen(PORT_NUM, (error) => {
     if(!error) {
